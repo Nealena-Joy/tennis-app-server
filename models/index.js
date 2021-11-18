@@ -9,8 +9,8 @@ const { DataTypes } = require("sequelize");
 
 //!  Associations
 UsersModel.hasMany(MatchesModel, {foreignKey: {name: 'playerID', type: DataTypes.UUID, allowNull: false}});     //  Users belongs to many matches
-MatchesModel.belongsToMany(UsersModel, {through: 'match-user'});
-UsersModel.belongsToMany(MatchesModel, {through: 'matches-user'});
+// MatchesModel.belongsToMany(UsersModel, {through: 'match-user'});
+// UsersModel.belongsToMany(MatchesModel, {through: 'matches-user'});
 
 PointsModel.belongsTo(MatchesModel);    // A Point belongs to a specific Match
 MatchesModel.hasMany(PointsModel);      // A Match can have many Points
