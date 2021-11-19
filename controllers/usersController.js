@@ -25,20 +25,21 @@ router.post('/register', async (req, res) =>{
             user => {
                 let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
                 res.status(201).json({
-                    message: 'User created!',
-                    user: user.username,
-                    sessionToken: `Bearer ${token}`
+                    Message: 'User successfully created!',
+                    Username: user.username,
+                    User_Role: user.userRole,
+                    Session_Token: `Bearer ${token}`
                 });
             }
         )
     } catch (err) {
         if (err instanceof UniqueConstraintError) {
             res.status(409).json({
-                message: 'Username already in use!'
+                Message: 'Username already in use!'
             });
         } else {
             res.status(500).json({
-                error: `Failed to register user: ${err}`
+                Error: `Failed to register user: ${err}`
             });
         };
     };
@@ -64,7 +65,7 @@ router.post('/login', async (req, res) => {
                             
                             res.status(200).json({
                                 Message: 'User successfully logged in',
-                                User: user.username,
+                                Username: user.username,
                                 User_Role: user.userRole,
                                 Session_Token: `Bearer ${token}`
                             });
