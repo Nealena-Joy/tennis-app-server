@@ -61,28 +61,29 @@ router.post('/login', async (req, res) => {
                     bcrypt.compare(password, user.password, (err, matches) => {
                         if (matches) {
                             let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24})
-                            res.json({
-                                user: user.username,
-                                userRole: user.userRole,
-                                message: 'User logged in',
-                                sessionToken: `Bearer ${token}`
-                            })
+                            
+                            res.status(200).json({
+                                Message: 'User successfully logged in',
+                                User: user.username,
+                                User_Role: user.userRole,
+                                Session_Token: `Bearer ${token}`
+                            });
                         } else {
-                            res.status(502).send({
-                                error: 'Bad gateway'
+                            res.status(401).send({
+                                Error: 'Incorrect email or password'
                             })
                         }
                     })
                 } else {
-                    res.status(500).send({
-                        error: 'Failed to authenticate'
+                    res.status(401).send({
+                        Error: 'Incorrect email or password'
                     })
                 }
             }
         )
     } catch (err) {
-        res.status(501).send({
-            error: 'Server does not support this functionality'
+        res.status(500).send({
+            Error: 'Server does not support this functionality'
         })
     }
 })
