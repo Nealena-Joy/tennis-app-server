@@ -120,13 +120,15 @@ router.get('/userinfo', validateAdminSession, async (req, res) => {
 
 //!  Get all players
 router.get('/players', validateAdminSession, async (req, res) => {
-
     try {
         await models.UsersModel.findAll({
             where: {userRole: 'Player'}
         })                     
-        .then( users => {
-            res.status(200).json({Players: users});
+        .then( players => {
+            let playerName = players.id
+            res.status(200).json({
+                Players: playerName
+            });
         })
     } catch (err) {
         res.status(500).json({
