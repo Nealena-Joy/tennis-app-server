@@ -121,7 +121,17 @@ router.get('/all-users', validateAdminSession, async (req, res) => {
 router.get('/all-players', validateAdminSession, async (req, res) => {
     try {
         await models.UsersModel.findAll({
-            where: {userRole: 'Player'}
+            where: {userRole: 'Player'},
+            include: [
+                {
+                    model: models.MatchesModel,
+                    include: [
+                        {
+                            model: models.PointsModel
+                        }
+                    ]
+                }
+            ]
         })                     
         .then( players => {
             res.status(200).json({
