@@ -21,7 +21,7 @@ router.post('/item', validatePlayerSession, async (req, res) => {
             Item => {
                 res.status(201).json({
                     Message: 'Item successfully created',
-                    Title: Item
+                    ItemDetails: Item
                 });
             }
         )

@@ -9,13 +9,14 @@ router.get('/test', (req, res) =>{
 
 //!  Create New Match
 router.post('/creatematch', validateAdminSession, async (req, res) => {
-    const {matchTitle, matchFormat, matchScore, playerID} = req.body.match;
+    const {matchID, matchTitle, matchFormat, matchScore, matchWinner, playerID} = req.body.match;
 
     try {
         await models.MatchesModel.create({
             matchTitle,
             matchFormat,
             matchScore,
+            matchWinner,
             playerID,
             coachID: req.user.id
         })
@@ -23,8 +24,8 @@ router.post('/creatematch', validateAdminSession, async (req, res) => {
             match => {
                 res.status(201).json({
                     Message: 'Match created',
-                    Match_Title: match.matchTitle,
-                    Created_By_CoachID: match.coachID,
+                    CoachID: match.coachID,
+                    MatchDetails: match
                 });
             }
         )

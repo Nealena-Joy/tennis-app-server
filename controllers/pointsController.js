@@ -25,8 +25,10 @@ router.post('/point', validateAdminSession, async (req, res) => {
             point => {
                 res.status(201).json({
                     Message: 'Point created',
-                    Point: `${point.setScore}, ${point.gameScore}`,
-                    Coach_Comment: point.coachComment
+                    SetGamePoint: `${point.setScore}, ${point.gameScore}`,
+                    PointDetails: point,
+                    MatchTitle: point.matchTitle
+
                 });
             }
         )

@@ -25,7 +25,7 @@ app.use('/plan', controllers.improvementItemsController);
 try {
     dbConnection
         .authenticate()
-        .then(async () => await dbConnection.sync({force: true})) 
+        .then(async () => await dbConnection.sync( ))  // {force: true}
         .then(() => {
             app.listen(process.env.PORT, () => {
                 console.log(`[SERVER]: App is listening on ${process.env.PORT}`);

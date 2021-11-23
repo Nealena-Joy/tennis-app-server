@@ -20,6 +20,10 @@ const Matches = db.define("matches", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    matchWinner: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     playerID: {
         type: DataTypes.UUID,
         allowNull: false,

@@ -20,9 +20,7 @@ const improvementItems = db.define("improvementItems", {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-    },
-
-
+    }
 });
 
 module.exports = improvementItems;

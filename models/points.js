@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require('../db');
 
 const Points = db.define("points", {
-    id: {
+    pointID: {
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,

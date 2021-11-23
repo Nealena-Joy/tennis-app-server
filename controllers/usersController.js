@@ -25,17 +25,16 @@ router.post('/register', async (req, res) =>{
             user => {
                 let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
                 res.status(201).json({
-                    Message: 'User successfully created!',
-                    Username: user.username,
-                    User_Role: user.userRole,
-                    Session_Token: `Bearer ${token}`
+                    Message: 'User successfully created',
+                    Session_Token: `Bearer ${token}`,                    
+                    UserDetails: user
                 });
             }
         )
     } catch (err) {
         if (err instanceof UniqueConstraintError) {
             res.status(409).json({
-                Message: 'Username already in use!'
+                Message: 'Username already in use'
             });
         } else {
             res.status(500).json({
@@ -65,9 +64,9 @@ router.post('/login', async (req, res) => {
                             
                             res.status(200).json({
                                 Message: 'User successfully logged in',
-                                Username: user.username,
-                                User_Role: user.userRole,
-                                Session_Token: `Bearer ${token}`
+                                Session_Token: `Bearer ${token}`,
+                                UserDetails: user
+                             
                             });
                         } else {
                             res.status(401).send({
@@ -90,7 +89,7 @@ router.post('/login', async (req, res) => {
 })
 
 //!  Get all user info
-router.get('/userinfo', validateAdminSession, async (req, res) => {
+router.get('/all-users', validateAdminSession, async (req, res) => {
     try {
         await models.UsersModel.findAll({
             include: [
@@ -119,15 +118,14 @@ router.get('/userinfo', validateAdminSession, async (req, res) => {
 });
 
 //!  Get all players
-router.get('/players', validateAdminSession, async (req, res) => {
+router.get('/all-players', validateAdminSession, async (req, res) => {
     try {
         await models.UsersModel.findAll({
             where: {userRole: 'Player'}
         })                     
         .then( players => {
-            let playerName = players.id
             res.status(200).json({
-                Players: playerName
+                PlayerDetails: players
             });
         })
     } catch (err) {
