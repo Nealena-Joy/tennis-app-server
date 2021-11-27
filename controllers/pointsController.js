@@ -40,15 +40,14 @@ router.post('/point', validateAdminSession, async (req, res) => {
 });
 
 //!  Delete Point By ID
-router.delete('/delete/:id', validateAdminSession, async (req, res) => {
+router.delete('/delete/:pointID', validateAdminSession, async (req, res) => {
     try {
         const deletePoint= await models.PointsModel.destroy({
-          where: { id: req.params.id, coachID: req.user.id },
+          where: { pointID: req.params.pointID, coachID: req.user.id },
         });
         res.status(200).json({ 
             Message: "Point successfully deleted", 
-            Point_ID: deletePoint.id, 
-            
+            Point_ID: deletePoint.pointID, 
         });
     } catch (err) {
         res.status(500).json({ Message: `Failed to delete Point: ${err}` });
