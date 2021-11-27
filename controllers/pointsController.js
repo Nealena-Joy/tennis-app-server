@@ -56,9 +56,9 @@ router.delete('/delete/:id', validateAdminSession, async (req, res) => {
 });
 
 //!  Update Point By ID
-router.put("/update/:id", validateAdminSession, async (req, res) => {
+router.put("/update/:pointID", validateAdminSession, async (req, res) => {
     const {setScore, gameScore, serveResult, pointResult, coachComment} = req.body.point;
-    const pointID = req.params.id;
+    const pointID = req.params.pointID;
     const updatedPoint = {
         setScore: setScore,
         gameScore: gameScore,
@@ -67,7 +67,7 @@ router.put("/update/:id", validateAdminSession, async (req, res) => {
         coachComment: coachComment,
     }
     try {
-        await models.PointsModel.update( updatedPoint, {where: { id: pointID }})
+        await models.PointsModel.update( updatedPoint, {where: { pointID: pointID }})
         .then(
             result => {
                 res.status(201).json({
