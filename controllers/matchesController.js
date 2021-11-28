@@ -46,7 +46,7 @@ router.delete("/delete/:id", validateAdminSession, async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: `Failed to delete Match: ${err}` });
     }
-});
+}); 
 
 //!  Update Match By ID
 router.put("/update/:id", validateAdminSession, async (req, res) => {

@@ -3,7 +3,7 @@ const { models } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { UniqueConstraintError } = require('sequelize/lib/errors');
-const { validateAdminSession } = require('../middleware');
+const { validateAdminSession, validatePlayerSession } = require('../middleware');
 
 //!  Test User Route
 router.get('/test', (req, res) =>{
@@ -145,7 +145,7 @@ router.get('/all-players', validateAdminSession, async (req, res) => {
     };
 });
 
-//!  Delete User, for Coach only
+//!  Delete Player - Coach only
 router.delete('/player-delete/:id', validateAdminSession, async (req, res) => {
     const {id, firstName, username} = req.body.user;
     const playerID = req.params.id;
@@ -161,6 +161,43 @@ router.delete('/player-delete/:id', validateAdminSession, async (req, res) => {
         });
     } catch (err) {
         res.status(500).json({Message: `Failed to delete Player: ${err}`})
+    }
+});
+
+//!  Delete current user
+router.delete('/current-delete/:id', async (req, res) => {
+    try {
+        await models.UsersModel.destroy({where: {id: req.params.id}})
+        res.status(200).json({
+            Message: "User successfully deleted"
+        });
+    } catch (err) {
+        res.status(500).json({Message: `Failed to delete yser: ${err}`})
+    }
+});
+
+//!  Update current user's info
+router.put('/:id', async (req, res) => {
+    const { firstName, lastName, username, password, id } = req.body.user;
+    const userID = req.params.id;
+    const updatedUser = {
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        password:  bcrypt.hashSync(password, 10)
+    }
+    try {
+        await models.UsersModel.update(updatedUser, {where: {id: userID}})
+        .then(
+            result => {
+            res.status(200).json({
+                message: "Updated User Info", 
+                id: userID,
+                updatedUser
+            });
+        });
+    } catch (err) {
+        res.status(500).json({message: `Failed to update user info. ${err}`})
     }
 });
 
