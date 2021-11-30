@@ -31,6 +31,10 @@ const Points = db.define("points", {
     coachID: {
         type: DataTypes.UUID,
         allowNull: false,
+    },
+    matchTitle: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 });
 

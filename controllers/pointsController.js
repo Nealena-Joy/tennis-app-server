@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { models } = require('../models');
 const { validateAdminSession } = require('../middleware');
-
+ 
 //! Test Points Route
 router.get('/test', (req, res) =>{
     res.send( 'This is a test route' );
@@ -9,7 +9,7 @@ router.get('/test', (req, res) =>{
 
 //!  Create New Point
 router.post('/point', validateAdminSession, async (req, res) => {
-    const {setScore, gameScore, serveResult, pointResult, coachComment, matchId} = req.body.point;
+    const {setScore, gameScore, serveResult, pointResult, coachComment, matchId, matchTitle} = req.body.point;
     
     try {
         await models.PointsModel.create({
@@ -19,7 +19,8 @@ router.post('/point', validateAdminSession, async (req, res) => {
             pointResult,
             coachComment, 
             matchId,
-            coachID: req.user.id
+            coachID: req.user.id,
+            matchTitle
         })
         .then(
             point => {
@@ -27,8 +28,6 @@ router.post('/point', validateAdminSession, async (req, res) => {
                     Message: 'Point created',
                     SetGamePoint: `${point.setScore}, ${point.gameScore}`,
                     PointDetails: point,
-                    MatchTitle: point.matchTitle
-
                 });
             }
         )
