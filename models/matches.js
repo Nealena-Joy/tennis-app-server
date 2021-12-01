@@ -28,10 +28,6 @@ const Matches = db.define("matches", {
         type: DataTypes.UUID,
         allowNull: false,
     },
-    playerName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     coachID: {
         type: DataTypes.UUID,
         allowNull: false,

@@ -9,7 +9,7 @@ router.get('/test', (req, res) =>{
 
 //!  Create New Point
 router.post('/point', validateAdminSession, async (req, res) => {
-    const {setScore, gameScore, serveResult, pointResult, coachComment, matchId, matchTitle} = req.body.point;
+    const {setScore, gameScore, serveResult, pointResult, coachComment, matchId} = req.body.point;
     
     try {
         await models.PointsModel.create({
@@ -19,8 +19,7 @@ router.post('/point', validateAdminSession, async (req, res) => {
             pointResult,
             coachComment, 
             matchId,
-            coachID: req.user.id,
-            matchTitle
+            coachID: req.user.id
         })
         .then(
             point => {
