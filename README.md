@@ -3,7 +3,6 @@
 App:  TennisLab
 
 Mission Statement
-This is where you write a short description on what your project is, the target audience, and the reasoning behind your choice of your project.
 
 Tennis is an expensive sport. For players who really want to improve, they would have to hire a personal coach to train with regularly and to show up for matches.
 
